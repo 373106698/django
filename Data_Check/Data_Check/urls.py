@@ -19,4 +19,12 @@ from app01 import views
 
 urlpatterns = [
     path("index/", views.index),
+
+    #用户管理
+    path("user/", views.user),
+    path("user_add/", views.user_add),
+    path("user_del/", views.user_del),
+    path("depart/", views.depart),
+
+
 ]
