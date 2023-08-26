@@ -24,6 +24,9 @@ urlpatterns = [
     path("user/", views.user),
     path("user_add/", views.user_add),
     path("user_del/", views.user_del),
+    #正则表达式传递参数
+    path("user/<int:nid>/edit/", views.user_edit),
+
     path("depart/", views.depart),
     path("depart/add/", views.depart_add),
     path("depart/del/", views.depart_del),

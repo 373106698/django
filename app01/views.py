@@ -1,6 +1,6 @@
 from django.shortcuts import render ,HttpResponse,redirect
 from .models import UserInfo,Department
-
+from django import forms
 
 
 def index(request):
@@ -14,19 +14,37 @@ def user(request):
         print(i.name,i.password,i.age)
     return render(request,"user.html",{"users":users})
 
+class UserModelForm(forms.ModelForm):
+
+    #判断输入字符长度
+    name = forms.CharField(label="姓名",max_length=10)
+    
+    #input框定义样式
+    class Meta:
+        model = UserInfo
+        fields = ['name','password','age','account','create_time','gender','depart']
+
+    def __init__(self,*args,**kwarges):
+        super().__init__(*args,**kwarges)
+        for name,field in self.fields.items():
+            field.widget.attrs = {"class":"form-control"}
+
 def user_add(request):
     if request.method == "GET":
-        return render(request,"user_add.html")
-    
-    name = request.POST.get("user")
-    password = request.POST.get("password")
-    age = request.POST.get("age")
-    account = request.POST.get("account")
-    department = request.POST.get("department")
-    UserInfo.objects.create(name=name,password=password,age=age,account=account,department=department)
+        form = UserModelForm()
+        return render(request,"user_add.html",{"form":form})
 
-    UserInfo.objects.create(name=name,password=password,age=age)
-    return redirect("/user/")
+    #post校验
+    form = UserModelForm(data=request.POST)
+    if form.is_valid():
+        print(form.cleaned_data)
+
+        #保存数据
+        form.save()
+        return redirect("/user/")
+    
+    #校验失败
+    return render(request,"user_add.html",{"form":form})
 
 
 def user_del(request):
@@ -34,6 +52,21 @@ def user_del(request):
     UserInfo.objects.filter(id=nid).delete()
     return redirect("/user/")
 
+def user_edit(request,nid):
+    #修改用户信息
+    row_obj = UserInfo.objects.filter(id=nid).first()
+    form = UserModelForm(instance=row_obj)
+    if request.method == "GET":
+        return render(request,"user_edit.html",{"form":form})
+    
+    #修改用户信息
+    form = UserModelForm(data=request.POST,instance=row_obj)
+    if form.is_valid():
+        form.save()
+        return redirect("/user/")
+
+
+#部门
 def depart(request):
     #获取数据库中的所有部门信息
     departments = Department.objects.all()
