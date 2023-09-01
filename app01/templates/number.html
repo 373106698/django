@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="container">
+
+        <div style="margin-bottom: 1%;"class="clearfix">
+            <a class="btn btn-primary" href="/pretty_add/">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>    
+                新建靓号
+            </a>
+            <div style="float: right; width: 30%;" s>
+                <form method="get">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="搜索" value="{{search_data}}">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+
+            </div>
+
+            <dev class="panel panel-default">
+                <div class="panel-heading" style=" margin-top: 2%;">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    号码池
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>phone</th>
+                            <th>价格</th>
+                            <th>级别</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                    </thead>
+                    <tbody>
+                        {% for obj in queryset %}
+                        <tr>
+                            <td>{{obj.id}}</td>
+                            <td>{{obj.phone}}</td>
+                            <td>{{obj.price}}</td>
+                            <td>{{obj.get_level_display}}</td> 
+                            <td>{{obj.get_status_display}}</td>
+                            <!-- get_ * _display  获取id对应的信息--> 
+                            <td>
+                                <a class="btn btn-primary btn-xs" href="/pretty/{{obj.id}}/edit/">编辑</a>
+                                <a class="btn btn-danger btn-xs" href="/pretty/{{obj.id}}/del/">删除</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </dev>
+        </div>
+        <div class="clearfix">
+            <ul class="pagination" style="float: left;">
+                {{page_string}}
+            </ul>
+        </div>    
+    </div>
+
+{% endblock %}

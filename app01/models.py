@@ -43,3 +43,27 @@ class Department(models.Model):
     #返回对象
     def __str__(self):
         return self.title
+
+class Prettynumber(models.Model):
+    """号码池"""
+    phone = models.CharField(verbose_name="手机号",max_length=11)
+    price = models.IntegerField(verbose_name="价格",default=0)
+
+
+    level_choices = (
+        (1,"1级用户"),  
+        (2,"2级用户"),
+        (3,"3级用户"),
+        (4,"4级用户"),
+        )
+    level = models.SmallIntegerField(verbose_name="等级",choices=level_choices)
+
+    status_choices = (
+        (1,"占用"),
+        (2,"未占用"),
+    )
+    status = models.SmallIntegerField(verbose_name="状态",choices=status_choices)
+    
+    #返回对象
+    def __str__(self):
+        return self.phone

@@ -34,4 +34,9 @@ urlpatterns = [
     #正则表达式传递参数
     path("depart/<int:nid>/edit/", views.depart_edit),
 
+    #靓号
+    path("number/", views.number),
+    path("pretty_add/", views.pretty_add),
+    path("pretty/<int:nid>/edit/", views.pretty_edit),
+    path("pretty/<int:nid>/del/", views.pretty_del)
 ]

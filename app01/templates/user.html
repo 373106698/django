@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for obj in users %}
+                    {% for obj in queryset %}
                     <tr>
                         <td>{{obj.id}}</td>
                         <td>{{obj.name}}</td>
@@ -51,6 +51,9 @@
             </table>
         </div>
     </div>
+    <ul class="pagination" style="float: left;">
+        {{page_string}}
+    </ul>
 </div>
 
 {% endblock %}

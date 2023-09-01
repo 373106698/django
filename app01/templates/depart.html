@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for obj in departments %}
+                    {% for obj in queryset %}
                     <tr>
                         <td>{{obj.id}}</td>
                         <td>{{obj.title}}</td>
@@ -38,6 +38,9 @@
             </table>
         </div>
     </div>
+    <ul class="pagination" style="float: left;">
+        {{page_string}}
+    </ul>
 </div>
 
 {% endblock %}
